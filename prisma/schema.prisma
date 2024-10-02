@@ -1,28 +1,14 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
-}
-
-model Quiz {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId // MongoDB ObjectId as primary key
-  userId      String   // ID of the user who created the quiz
-  title       String   // Title of the quiz
-  description String?  // Optional description of the quiz
-  imageUrls   String[] // Array of image URLs (if any)
-  attachments Attachment[] // One-to-many relationship with attachments
-
-  createdAt   DateTime @default(now()) // Timestamp for quiz creation
-  updatedAt   DateTime @updatedAt      // Timestamp for last quiz update
-}
-
-model Attachment {
-  id    String   @id @default(auto()) @map("_id") @db.ObjectId // MongoDB ObjectId as primary key
-  name  String   // Attachment name
-  url   String   // URL for the attachment
-  quiz  Quiz     @relation(fields: [quizId], references: [id]) // Foreign key to Quiz
-  quizId String  // Foreign key that links attachment to a quiz
 }
